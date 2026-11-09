@@ -20,6 +20,10 @@
   let flatWords = [];
   let lastRenderedKey = "";
   let isSeeking = false;
+  let localAudioUrl = null;
+  const localAudioButton = $("localAudioButton");
+  const localAudioInput = $("localAudioInput");
+  const audioFileStatus = $("audioFileStatus");
 
   function parseEnhancedLrc(source) {
     const parsed = [];
@@ -223,6 +227,20 @@
 
   audio.addEventListener("error", () => {
     lyricsMessage.textContent = "The audio file could not be loaded. Check that assets/song.mp3 exists.";
+  });
+
+
+  localAudioButton.addEventListener("click", () => localAudioInput.click());
+  localAudioInput.addEventListener("change", (event) => {
+    const file = event.target.files && event.target.files[0];
+    if (!file) return;
+    if (localAudioUrl) URL.revokeObjectURL(localAudioUrl);
+    localAudioUrl = URL.createObjectURL(file);
+    audio.src = localAudioUrl;
+    audio.load();
+    audioFileStatus.textContent = file.name;
+    lyricsMessage.textContent = "Local audio loaded. Word highlighting is using the uploaded LRC timeline.";
+    lastRenderedKey = "";
   });
 
   loadLyrics();
