@@ -14,12 +14,37 @@
   const nextLine = $("nextLine");
   const lyricPosition = $("lyricPosition");
   const lyricsMessage = $("lyricsMessage");
-  const lyricsStage = $("lyricsStage");
+  const lyricsPanel = document.querySelector(".lyrics-panel");
+  const coverArt = document.querySelector(".cover-art");
+  const reactivitySelect = $("reactivitySelect");
+  const bassMeter = $("bassMeter");
+  const midMeter = $("midMeter");
+  const highMeter = $("highMeter");
 
+  const reactivityModes = {
+    subtle: { gain: 0.62, beatThreshold: 0.13, label: "Subtle" },
+    balanced: { gain: 1, beatThreshold: 0.09, label: "Balanced" },
+    dynamic: { gain: 1.42, beatThreshold: 0.065, label: "Dynamic" }
+  };
+
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let reactivityMode = "balanced";
   let lyricLines = [];
   let flatWords = [];
-  let lastRenderedKey = "";
+  let renderedLineIndex = -2;
+  let lastActiveIndex = -1;
+  let currentWordElements = [];
   let isSeeking = false;
+
+  let audioContext = null;
+  let analyser = null;
+  let frequencyData = null;
+  let animationFrameId = null;
+  let lastFrameTime = 0;
+  let previousBassRaw = 0;
+  let lastBeatTime = 0;
+  let beatPulse = 0;
+  const smoothedEnergy = { bass: 0, mid: 0, high: 0 };
 
   function parseEnhancedLrc(source) {
     const parsed = [];
@@ -37,9 +62,14 @@
   }
 
   function flattenWords(lines) {
-    return lines.flatMap((line, lineIndex) =>
-      line.words.map((word, wordIndex) => ({ ...word, lineIndex, wordIndex }))
-    );
+    const words = [];
+    lines.forEach((line, lineIndex) => {
+      line.startIndex = words.length;
+      line.words.forEach((word, wordIndex) => {
+        words.push({ ...word, lineIndex, wordIndex });
+      });
+    });
+    return words;
   }
 
   function escapeHtml(value) {
@@ -64,47 +94,85 @@
     return found;
   }
 
-  function renderLine(target, line, activeWordIndex, lineIndex, role) {
+  function renderLine(target, line, role) {
+    target.className = "lyric-line " + role;
     if (!line) {
       target.textContent = "";
-      target.className = "lyric-line " + role;
       return;
     }
-    target.className = "lyric-line " + role;
+
     target.innerHTML = line.words.map((word, wordIndex) => {
-      const globalIndex = flatWords.findIndex((item) =>
-        item.lineIndex === lineIndex && item.wordIndex === wordIndex
-      );
-      const state = globalIndex < activeWordIndex ? "done"
-        : globalIndex === activeWordIndex ? "active" : "upcoming";
-      return '<span class="word ' + state + '">' + escapeHtml(word.text) + "</span>";
+      const globalIndex = line.startIndex + wordIndex;
+      const safeWord = escapeHtml(word.text);
+      return '<span class="word upcoming" data-global-index="' + globalIndex +
+        '" style="--word-progress:0"><span class="word-base">' + safeWord +
+        '</span><span class="word-highlight" aria-hidden="true">' + safeWord + "</span></span>";
     }).join(" ");
+
+    if (role === "lyric-current") {
+      currentWordElements = [...target.querySelectorAll(".word")];
+      target.classList.remove("line-enter");
+      void target.offsetWidth;
+      target.classList.add("line-enter");
+    }
   }
 
-  function renderLyrics() {
+  function renderLyrics(time = audio.currentTime || 0) {
     if (!lyricLines.length) return;
-    const activeIndex = findActiveWord(audio.currentTime || 0);
+
+    const activeIndex = findActiveWord(time);
     if (activeIndex < 0) {
-      previousLine.textContent = "";
-      currentLine.textContent = "The song is about to begin.";
-      nextLine.textContent = lyricLines[0].words.map((word) => word.text).join(" ");
-      lyricPosition.textContent = "INTRO";
+      if (renderedLineIndex !== -1) {
+        previousLine.textContent = "";
+        currentLine.className = "lyric-line lyric-current";
+        currentLine.textContent = "The song is about to begin.";
+        renderLine(nextLine, lyricLines[0], "lyric-next");
+        currentWordElements = [];
+        renderedLineIndex = -1;
+        lastActiveIndex = -1;
+        lyricPosition.textContent = "INTRO";
+      }
       return;
     }
 
     const active = flatWords[activeIndex];
     const lineIndex = active.lineIndex;
-    const key = lineIndex + ":" + activeIndex;
-    if (key === lastRenderedKey) return;
-    lastRenderedKey = key;
 
-    renderLine(previousLine, lyricLines[lineIndex - 1], activeIndex, lineIndex - 1, "lyric-previous");
-    renderLine(currentLine, lyricLines[lineIndex], activeIndex, lineIndex, "lyric-current");
-    renderLine(nextLine, lyricLines[lineIndex + 1], activeIndex, lineIndex + 1, "lyric-next");
+    if (lineIndex !== renderedLineIndex) {
+      renderLine(previousLine, lyricLines[lineIndex - 1], "lyric-previous");
+      renderLine(currentLine, lyricLines[lineIndex], "lyric-current");
+      renderLine(nextLine, lyricLines[lineIndex + 1], "lyric-next");
+      renderedLineIndex = lineIndex;
+      lastActiveIndex = -1;
+      lyricPosition.textContent = "LINE " + String(lineIndex + 1).padStart(2, "0") +
+        " / " + String(lyricLines.length).padStart(2, "0");
+    }
 
-    lyricPosition.textContent = "LINE " + String(lineIndex + 1).padStart(2, "0") +
-      " / " + String(lyricLines.length).padStart(2, "0");
-    currentLine.dataset.activeWord = String(active.wordIndex);
+    if (activeIndex !== lastActiveIndex) {
+      currentWordElements.forEach((element) => {
+        const globalIndex = Number(element.dataset.globalIndex);
+        const state = globalIndex < activeIndex ? "done"
+          : globalIndex === activeIndex ? "active" : "upcoming";
+        if (element.dataset.state !== state) {
+          element.dataset.state = state;
+          element.classList.remove("done", "active", "upcoming");
+          element.classList.add(state);
+        }
+      });
+      lastActiveIndex = activeIndex;
+      currentLine.dataset.activeWord = String(active.wordIndex);
+    }
+
+    const activeElement = currentWordElements[active.wordIndex];
+    if (activeElement) {
+      const nextWord = flatWords[activeIndex + 1];
+      const nextTime = nextWord && nextWord.time > active.time
+        ? nextWord.time
+        : active.time + 0.32;
+      const duration = Math.max(0.12, Math.min(1.15, nextTime - active.time));
+      const progress = Math.min(1, Math.max(0, (time - active.time) / duration));
+      activeElement.style.setProperty("--word-progress", progress.toFixed(3));
+    }
   }
 
   function formatTime(seconds) {
@@ -115,7 +183,8 @@
   }
 
   function setRangeProgress(input, fraction) {
-    input.style.setProperty("--range-progress", (Math.max(0, Math.min(1, fraction)) * 100) + "%");
+    input.style.setProperty("--range-progress",
+      (Math.max(0, Math.min(1, fraction)) * 100) + "%");
   }
 
   function updateClock() {
@@ -124,12 +193,175 @@
     currentTimeLabel.textContent = formatTime(current);
     totalTimeLabel.textContent = formatTime(duration);
     durationLabel.textContent = formatTime(duration);
+
     if (!isSeeking && duration > 0) {
       const fraction = current / duration;
       seekBar.value = String(Math.round(fraction * 1000));
       setRangeProgress(seekBar, fraction);
     }
-    renderLyrics();
+
+    renderLyrics(current);
+  }
+
+  function smoothValue(current, target, deltaSeconds, attackSeconds, releaseSeconds) {
+    const timeConstant = target > current ? attackSeconds : releaseSeconds;
+    const amount = 1 - Math.exp(-deltaSeconds / timeConstant);
+    return current + (target - current) * amount;
+  }
+
+  function readFrequencyBand(minHz, maxHz) {
+    if (!analyser || !frequencyData || !audioContext) return 0;
+    const binWidth = audioContext.sampleRate / analyser.fftSize;
+    const firstBin = Math.max(1, Math.floor(minHz / binWidth));
+    const lastBin = Math.min(frequencyData.length - 1, Math.ceil(maxHz / binWidth));
+    if (lastBin <= firstBin) return 0;
+
+    let total = 0;
+    let count = 0;
+    for (let index = firstBin; index <= lastBin; index += 1) {
+      total += frequencyData[index];
+      count += 1;
+    }
+    return count ? Math.pow(total / count / 255, 0.88) : 0;
+  }
+
+  function setMeter(element, value) {
+    if (element) element.style.transform = "scaleX(" + Math.max(0, Math.min(1, value)).toFixed(3) + ")";
+  }
+
+  function updateAudioVisuals(deltaSeconds, now) {
+    if (!analyser || !frequencyData) return;
+
+    analyser.getByteFrequencyData(frequencyData);
+
+    const bassRaw = readFrequencyBand(35, 150);
+    const midRaw = readFrequencyBand(150, 2000);
+    const highRaw = readFrequencyBand(2000, 9000);
+
+    smoothedEnergy.bass = smoothValue(smoothedEnergy.bass, bassRaw, deltaSeconds, 0.045, 0.24);
+    smoothedEnergy.mid = smoothValue(smoothedEnergy.mid, midRaw, deltaSeconds, 0.055, 0.2);
+    smoothedEnergy.high = smoothValue(smoothedEnergy.high, highRaw, deltaSeconds, 0.035, 0.16);
+
+    const mode = reactivityModes[reactivityMode];
+    const motionGain = prefersReducedMotion ? mode.gain * 0.45 : mode.gain;
+    const bassFlux = Math.max(0, bassRaw - previousBassRaw);
+    const beatCooldown = reactivityMode === "dynamic" ? 190 : 245;
+
+    if (bassFlux > mode.beatThreshold && bassRaw > 0.2 && now - lastBeatTime > beatCooldown) {
+      beatPulse = Math.min(1, 0.48 + bassFlux * 3.4);
+      lastBeatTime = now;
+    }
+    previousBassRaw = bassRaw;
+    beatPulse *= Math.exp(-deltaSeconds / 0.2);
+
+    const bassLevel = Math.min(1, smoothedEnergy.bass * motionGain + beatPulse * 0.46);
+    const midLevel = Math.min(1, smoothedEnergy.mid * motionGain);
+    const highLevel = Math.min(1, smoothedEnergy.high * motionGain);
+    const pulseLevel = prefersReducedMotion ? 0 : beatPulse * motionGain;
+
+    lyricsPanel.style.setProperty("--bass-level", bassLevel.toFixed(3));
+    lyricsPanel.style.setProperty("--mid-level", midLevel.toFixed(3));
+    lyricsPanel.style.setProperty("--high-level", highLevel.toFixed(3));
+    lyricsPanel.style.setProperty("--beat-pulse", pulseLevel.toFixed(3));
+
+    if (coverArt) {
+      coverArt.style.setProperty("--bass-level", bassLevel.toFixed(3));
+      coverArt.style.setProperty("--high-level", highLevel.toFixed(3));
+      coverArt.style.setProperty("--beat-pulse", pulseLevel.toFixed(3));
+    }
+
+    setMeter(bassMeter, smoothedEnergy.bass);
+    setMeter(midMeter, smoothedEnergy.mid);
+    setMeter(highMeter, smoothedEnergy.high);
+  }
+
+  async function initialiseAudioAnalysis() {
+    if (analyser) {
+      if (audioContext && audioContext.state === "suspended") await audioContext.resume();
+      return true;
+    }
+
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContextClass) {
+      lyricsMessage.textContent = "Audio visual effects are unavailable in this browser. Lyrics will remain synchronized.";
+      return false;
+    }
+
+    let mediaSource = null;
+    let sourceConnectedToAnalyser = false;
+    let analyserConnectedToDestination = false;
+    try {
+      audioContext = new AudioContextClass();
+      mediaSource = audioContext.createMediaElementSource(audio);
+      analyser = audioContext.createAnalyser();
+      analyser.fftSize = 4096;
+      analyser.minDecibels = -88;
+      analyser.maxDecibels = -18;
+      analyser.smoothingTimeConstant = 0.68;
+      mediaSource.connect(analyser);
+      sourceConnectedToAnalyser = true;
+      analyser.connect(audioContext.destination);
+      analyserConnectedToDestination = true;
+      frequencyData = new Uint8Array(analyser.frequencyBinCount);
+
+      if (audioContext.state === "suspended") await audioContext.resume();
+      lyricsMessage.textContent = flatWords.length + " word cues · live audio analysis enabled";
+      return true;
+    } catch (error) {
+      // Keep the MP3 audible even if frequency analysis is unsupported or fails.
+      try {
+        if (mediaSource && audioContext && (!sourceConnectedToAnalyser || !analyserConnectedToDestination)) {
+          mediaSource.connect(audioContext.destination);
+        }
+        if (audioContext && audioContext.state === "suspended") await audioContext.resume();
+      } catch (_) {
+        // The failure message below explains that only the visual effects are unavailable.
+      }
+      analyser = null;
+      frequencyData = null;
+      lyricsMessage.textContent = "Live audio analysis could not start. Synchronized lyrics remain available.";
+      return false;
+    }
+  }
+
+  function animationFrame(now) {
+    const deltaSeconds = lastFrameTime
+      ? Math.min(0.05, Math.max(0.001, (now - lastFrameTime) / 1000))
+      : 1 / 60;
+    lastFrameTime = now;
+
+    updateAudioVisuals(deltaSeconds, now);
+    updateClock();
+    animationFrameId = window.requestAnimationFrame(animationFrame);
+  }
+
+  function startAnimationLoop() {
+    if (animationFrameId !== null) return;
+    lastFrameTime = 0;
+    animationFrameId = window.requestAnimationFrame(animationFrame);
+  }
+
+  function relaxAudioVisuals() {
+    if (animationFrameId !== null) {
+      window.cancelAnimationFrame(animationFrameId);
+      animationFrameId = null;
+    }
+    lastFrameTime = 0;
+    beatPulse = 0;
+    previousBassRaw = 0;
+    smoothedEnergy.bass = 0;
+    smoothedEnergy.mid = 0;
+    smoothedEnergy.high = 0;
+
+    [lyricsPanel, coverArt].filter(Boolean).forEach((element) => {
+      element.style.setProperty("--bass-level", "0");
+      element.style.setProperty("--mid-level", "0");
+      element.style.setProperty("--high-level", "0");
+      element.style.setProperty("--beat-pulse", "0");
+    });
+    setMeter(bassMeter, 0);
+    setMeter(midMeter, 0);
+    setMeter(highMeter, 0);
   }
 
   async function loadLyrics() {
@@ -140,8 +372,8 @@
       lyricLines = parseEnhancedLrc(source);
       flatWords = flattenWords(lyricLines);
       if (!flatWords.length) throw new Error("No word timestamps found in the LRC file.");
-      lyricsMessage.textContent = flatWords.length + " word cues · Suno alignment";
-      renderLyrics();
+      lyricsMessage.textContent = flatWords.length + " word cues · ready for live audio analysis";
+      renderLyrics(0);
     } catch (error) {
       lyricsMessage.textContent = "Could not load the synchronized lyrics. " + error.message;
       currentLine.textContent = "Lyrics unavailable.";
@@ -150,7 +382,10 @@
 
   playButton.addEventListener("click", async () => {
     if (audio.paused) {
-      try { await audio.play(); } catch (error) {
+      try {
+        await initialiseAudioAnalysis();
+        await audio.play();
+      } catch (error) {
         lyricsMessage.textContent = "Playback could not start: " + error.message;
       }
     } else {
@@ -161,15 +396,28 @@
   audio.addEventListener("play", () => {
     playButton.classList.add("is-playing");
     playButton.setAttribute("aria-label", "Pause");
+    startAnimationLoop();
   });
+
   audio.addEventListener("pause", () => {
     playButton.classList.remove("is-playing");
     playButton.setAttribute("aria-label", "Play");
+    relaxAudioVisuals();
+    updateClock();
+  });
+
+  audio.addEventListener("ended", () => {
+    relaxAudioVisuals();
+    updateClock();
   });
   audio.addEventListener("timeupdate", updateClock);
   audio.addEventListener("loadedmetadata", updateClock);
   audio.addEventListener("durationchange", updateClock);
-  audio.addEventListener("seeked", () => { lastRenderedKey = ""; updateClock(); });
+  audio.addEventListener("seeked", () => {
+    renderedLineIndex = -2;
+    lastActiveIndex = -1;
+    updateClock();
+  });
 
   seekBar.addEventListener("input", () => {
     isSeeking = true;
@@ -193,8 +441,14 @@
     audio.muted = !audio.muted;
     $("muteButton").setAttribute("aria-label", audio.muted ? "Unmute" : "Mute");
   });
+
   $("speedSelect").addEventListener("change", (event) => {
     audio.playbackRate = Number(event.target.value);
+  });
+
+  reactivitySelect.addEventListener("change", (event) => {
+    reactivityMode = event.target.value in reactivityModes ? event.target.value : "balanced";
+    reactivitySelect.title = reactivityModes[reactivityMode].label + " audio response";
   });
 
   $("fullscreenButton").addEventListener("click", async () => {
@@ -222,9 +476,8 @@
   });
 
   audio.addEventListener("error", () => {
-    lyricsMessage.textContent = "The MP3 is not bundled yet. Use “LOAD MP3 FROM DEVICE” to choose the recording.";
+    lyricsMessage.textContent = "The audio file could not be loaded. Try refreshing the page.";
   });
-
 
   loadLyrics();
 })();

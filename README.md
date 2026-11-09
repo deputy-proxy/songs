@@ -1,14 +1,14 @@
 # The Ground Beneath Our Shoes — Karaoke
 
-A small, static karaoke page with word-by-word lyric highlighting.
+A static karaoke player with Enhanced LRC word timing and real-time audio-reactive visuals.
 
 ## Play
-Open the GitHub Pages site and press Play. The MP3 and Enhanced LRC are bundled with the page. The player uses the audio element's playback clock, so seeking and playback-speed changes keep the lyric highlight synchronized.
+Open the GitHub Pages site and press Play. The MP3 and Enhanced LRC are bundled with the page. Word fills follow the audio playback clock, while the Web Audio API analyses bass, midrange, and high-frequency energy locally in the browser. Frequency energy drives the lyric glow, pulse, cover art, and live frequency meters. Bass transients add beat accents. Seeking and playback-speed changes remain synchronized.
 
 ## Repository layout
 - `index.html` — karaoke page
 - `style.css` — responsive display
-- `karaoke.js` — audio and Enhanced LRC playback logic
+- `karaoke.js` — audio playback, Enhanced LRC timing, Web Audio analysis, and animation loop
 - `assets/song.mp3` — uploaded recording
 - `assets/song.enhanced.lrc` — Suno word alignment
 
@@ -17,3 +17,6 @@ The LRC uses Enhanced LRC word timestamps, with each word prefixed by its start 
 
 ## Deployment
 GitHub Actions publishes the static site to GitHub Pages from `main`.
+
+## Audio reactivity
+The reactivity selector has three presets: Subtle, Balanced, and Dynamic. The audio is analysed locally by the browser after the user presses Play; no audio is uploaded for analysis. Browsers without Web Audio support still play the song and show synchronized lyrics, but do not show frequency-driven effects.

@@ -60,6 +60,11 @@
         <p id="nextLine" class="lyric-line lyric-next"></p>
       </div>
       <div id="lyricsMessage" class="lyrics-message">Loading synchronized lyrics…</div>
+      <div class="frequency-meter" aria-label="Live audio frequency levels" aria-hidden="true">
+        <div class="frequency-band"><span>BASS</span><div class="frequency-track"><i id="bassMeter"></i></div></div>
+        <div class="frequency-band"><span>MIDS</span><div class="frequency-track"><i id="midMeter"></i></div></div>
+        <div class="frequency-band"><span>AIR</span><div class="frequency-track"><i id="highMeter"></i></div></div>
+      </div>
     </section>
 
     <section class="player-controls" aria-label="Audio controls">
@@ -86,6 +91,14 @@
             <option value="0.75">0.75×</option><option value="0.9">0.9×</option>
             <option value="1" selected>1×</option><option value="1.1">1.1×</option><option value="1.25">1.25×</option>
           </select>
+          <div class="reactivity-control">
+            <label class="reactivity-label" for="reactivitySelect">REACTIVITY</label>
+            <select id="reactivitySelect" class="reactivity-select" aria-label="Audio visual reactivity">
+              <option value="subtle">Subtle</option>
+              <option value="balanced" selected>Balanced</option>
+              <option value="dynamic">Dynamic</option>
+            </select>
+          </div>
           <a class="lyrics-download" href="./assets/song.enhanced.lrc" download="the-ground-beneath-our-shoes.enhanced.lrc">DOWNLOAD LRC <span>↗</span></a>
         </div>
       </div>
