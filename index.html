@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
 </head>
 <body data-template="green-light">
   <div class="ambient ambient-one"></div>
@@ -54,6 +55,7 @@
         <span id="lyricPosition" class="lyric-position">LYRICS READY</span>
       </div>
       <div class="lyrics-stage" id="lyricsStage">
+        <div class="lyric-transition-glow" aria-hidden="true"></div>
         <p id="previousLine" class="lyric-line lyric-previous"></p>
         <div class="lyric-current-wrap">
           <div id="currentLine" class="lyric-line lyric-current" aria-live="off">Press play when you're ready.</div>

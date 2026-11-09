@@ -473,3 +473,40 @@ body.ui-hidden[data-template="green-light"] .lyrics-panel::before { opacity: .5;
   body.ui-hidden .frequency-band > span { font-size: 7px; }
 }
 body.ui-hidden .lyrics-panel { touch-action: manipulation; }
+
+/* Cinematic lyric reel transitions (GSAP drives the FLIP movement). */
+.lyrics-stage { position: relative; }
+.lyric-line {
+  position: relative;
+  z-index: 1;
+  transition: none;
+  will-change: transform, opacity, filter;
+}
+.lyric-current-wrap { position: relative; z-index: 2; }
+.lyric-previous .word-base,
+.lyric-next .word-base { color: inherit; }
+.lyric-previous .word-highlight,
+.lyric-next .word-highlight { display: none; }
+.lyric-transition-glow {
+  position: absolute;
+  z-index: 0;
+  left: 12%;
+  right: 12%;
+  top: 25%;
+  height: 50%;
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at center, rgba(123, 239, 189, .24) 0%, rgba(83, 192, 151, .1) 36%, transparent 72%);
+  filter: blur(24px);
+  transform: scale(.72);
+  will-change: transform, opacity;
+}
+body[data-template="monochrome"] .lyric-transition-glow {
+  background: radial-gradient(ellipse at center, rgba(255,255,255,.18) 0%, rgba(190,190,190,.07) 36%, transparent 72%);
+}
+@media (prefers-reduced-motion: reduce) {
+  .lyric-line { will-change: auto; }
+  .lyric-transition-glow { display: none; }
+}
+.word-visual { position: relative; display: inline-block; will-change: transform, opacity, filter; }

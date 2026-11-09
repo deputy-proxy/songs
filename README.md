@@ -28,3 +28,6 @@ Use the **Template** selector to switch designs without interrupting playback.
 
 ## Clean lyrics view
 Use **UI ON** to hide the surrounding interface and leave only the synchronized lyrics and BASS / MIDS / AIR meters. Press `U` or double-click / double-tap the lyrics to restore the full interface. Playback can still be controlled with `Space` while the interface is hidden.
+
+## Cinematic lyric transitions
+The player uses GSAP 3.12.5 for a FLIP-style lyric reel: on normal line advances, the previous, current, and next lines glide into their new positions together. The incoming current line receives a restrained word stagger, with a brief ambient glow and a subtle cover-art accent. Seeks and larger jumps use a softer cross-fade instead of scrolling through skipped lines. If GSAP is unavailable, the player falls back to a small CSS line reveal; reduced-motion preferences disable the larger movement.

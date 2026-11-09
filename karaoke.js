@@ -12,6 +12,7 @@
   const previousLine = $("previousLine");
   const currentLine = $("currentLine");
   const nextLine = $("nextLine");
+  const transitionGlow = document.querySelector(".lyric-transition-glow");
   const lyricPosition = $("lyricPosition");
   const lyricsMessage = $("lyricsMessage");
   const coverArt = document.querySelector(".cover-art");
@@ -37,6 +38,7 @@
   let flatWords = [];
   let renderedLineIndex = -2;
   let lastActiveIndex = -1;
+  let lineTransitionTimeline = null;
   let currentWordElements = [];
   let isSeeking = false;
 
@@ -109,15 +111,142 @@
       const globalIndex = line.startIndex + wordIndex;
       const safeWord = escapeHtml(word.text);
       return '<span class="word upcoming" data-global-index="' + globalIndex +
-        '" style="--word-progress:0"><span class="word-base">' + safeWord +
-        '</span><span class="word-highlight" aria-hidden="true">' + safeWord + "</span></span>";
+        '" style="--word-progress:0"><span class="word-visual"><span class="word-base">' + safeWord +
+        '</span><span class="word-highlight" aria-hidden="true">' + safeWord + "</span></span></span>";
     }).join(" ");
 
     if (role === "lyric-current") {
       currentWordElements = [...target.querySelectorAll(".word")];
       target.classList.remove("line-enter");
-      void target.offsetWidth;
-      target.classList.add("line-enter");
+      if (!window.gsap && !prefersReducedMotion) {
+        void target.offsetWidth;
+        target.classList.add("line-enter");
+      }
+    }
+  }
+
+  function captureLyricSlotPositions() {
+    const rect = (element) => {
+      if (!element || !element.textContent.trim()) return null;
+      const bounds = element.getBoundingClientRect();
+      return { top: bounds.top, height: bounds.height };
+    };
+
+    return {
+      previous: rect(previousLine),
+      current: rect(currentLine),
+      next: rect(nextLine)
+    };
+  }
+
+  function animateLyricTransition(oldLineIndex, newLineIndex, oldPositions) {
+    const gsap = window.gsap;
+    const slots = [previousLine, currentLine, nextLine];
+
+    if (!gsap || prefersReducedMotion) {
+      currentLine.classList.remove("line-enter");
+      if (!gsap && !prefersReducedMotion) {
+        void currentLine.offsetWidth;
+        currentLine.classList.add("line-enter");
+      }
+      return;
+    }
+
+    if (lineTransitionTimeline) {
+      lineTransitionTimeline.kill();
+      lineTransitionTimeline = null;
+    }
+
+    slots.forEach((element) => {
+      gsap.killTweensOf(element);
+      gsap.set(element, { clearProps: "transform,opacity,filter,visibility" });
+    });
+    if (transitionGlow) {
+      gsap.killTweensOf(transitionGlow);
+      gsap.set(transitionGlow, { clearProps: "opacity,scale,visibility" });
+    }
+
+    const difference = oldLineIndex >= 0 ? newLineIndex - oldLineIndex : 0;
+    const isAdjacent = Math.abs(difference) === 1;
+    const direction = difference >= 0 ? 1 : -1;
+    const currentTop = currentLine.getBoundingClientRect().top;
+    const previousTop = previousLine.getBoundingClientRect().top;
+    const nextTop = nextLine.getBoundingClientRect().top;
+
+    // FLIP offsets make the three lyric slots glide like one vertical lyric reel.
+    const previousFromY = isAdjacent && difference > 0 && oldPositions.current
+      ? oldPositions.current.top - previousTop
+      : -16;
+    const currentSource = isAdjacent
+      ? (difference > 0 ? oldPositions.next : oldPositions.previous)
+      : null;
+    const currentFromY = currentSource
+      ? currentSource.top - currentTop
+      : (oldLineIndex < 0 ? 22 : 12 * direction);
+    const nextFromY = isAdjacent && difference < 0 && oldPositions.current
+      ? oldPositions.current.top - nextTop
+      : 16;
+
+    const hasPrevious = Boolean(previousLine.textContent.trim());
+    const hasNext = Boolean(nextLine.textContent.trim());
+    const timeline = gsap.timeline({
+      defaults: { overwrite: "auto" },
+      onComplete: () => {
+        slots.forEach((element) => gsap.set(element, { clearProps: "transform,opacity,filter,visibility" }));
+        if (transitionGlow) gsap.set(transitionGlow, { clearProps: "opacity,scale,visibility" });
+        lineTransitionTimeline = null;
+      }
+    });
+    lineTransitionTimeline = timeline;
+
+    if (hasPrevious) {
+      timeline.fromTo(previousLine,
+        { y: previousFromY, autoAlpha: isAdjacent && difference > 0 ? 0.12 : 0, filter: "blur(5px)", scale: .985 },
+        { y: 0, autoAlpha: .52, filter: "blur(.2px)", scale: 1, duration: .62, ease: "power3.out" },
+        0
+      );
+    }
+
+    timeline.fromTo(currentLine,
+      { y: currentFromY, autoAlpha: isAdjacent ? .24 : 0, filter: "blur(7px)", scale: .975 },
+      { y: 0, autoAlpha: 1, filter: "blur(0px)", scale: 1, duration: .72, ease: "power4.out" },
+      0
+    );
+
+    const wordVisualLayers = currentWordElements
+      .map((element) => element.querySelector(".word-visual"))
+      .filter(Boolean);
+    if (wordVisualLayers.length) {
+      timeline.fromTo(wordVisualLayers,
+        { y: 13, autoAlpha: .28, filter: "blur(3px)" },
+        { y: 0, autoAlpha: 1, filter: "blur(0px)", duration: .46, stagger: { each: .022, from: "start" }, ease: "power3.out" },
+        .055
+      );
+    }
+
+    if (hasNext) {
+      timeline.fromTo(nextLine,
+        { y: nextFromY, autoAlpha: isAdjacent && difference < 0 ? .16 : 0, filter: "blur(5px)", scale: .99 },
+        { y: 0, autoAlpha: .52, filter: "blur(.2px)", scale: 1, duration: .66, ease: "power3.out" },
+        .035
+      );
+    }
+
+    if (transitionGlow) {
+      gsap.set(transitionGlow, { clearProps: "opacity,scale" });
+      timeline.fromTo(transitionGlow,
+        { autoAlpha: 0, scale: .72 },
+        { autoAlpha: .78, scale: 1.08, duration: .24, ease: "power2.out", yoyo: true, repeat: 1 },
+        .015
+      );
+    }
+
+    if (coverArt && isAdjacent) {
+      timeline.fromTo(coverArt,
+        { scale: 1 },
+        { scale: 1.025, duration: .22, ease: "power2.out", yoyo: true, repeat: 1 },
+        0
+      );
     }
   }
 
@@ -143,6 +272,9 @@
     const lineIndex = active.lineIndex;
 
     if (lineIndex !== renderedLineIndex) {
+      const oldLineIndex = renderedLineIndex;
+      const oldPositions = captureLyricSlotPositions();
+
       renderLine(previousLine, lyricLines[lineIndex - 1], "lyric-previous");
       renderLine(currentLine, lyricLines[lineIndex], "lyric-current");
       renderLine(nextLine, lyricLines[lineIndex + 1], "lyric-next");
@@ -150,6 +282,8 @@
       lastActiveIndex = -1;
       lyricPosition.textContent = "LINE " + String(lineIndex + 1).padStart(2, "0") +
         " / " + String(lyricLines.length).padStart(2, "0");
+
+      animateLyricTransition(oldLineIndex, lineIndex, oldPositions);
     }
 
     if (activeIndex !== lastActiveIndex) {
@@ -433,6 +567,22 @@
   audio.addEventListener("timeupdate", updateClock);
   audio.addEventListener("loadedmetadata", updateClock);
   audio.addEventListener("durationchange", updateClock);
+  audio.addEventListener("seeking", () => {
+    if (lineTransitionTimeline) {
+      lineTransitionTimeline.kill();
+      lineTransitionTimeline = null;
+    }
+    if (window.gsap) {
+      [previousLine, currentLine, nextLine].forEach((element) => {
+        window.gsap.killTweensOf(element);
+        window.gsap.set(element, { clearProps: "transform,opacity,filter,visibility" });
+      });
+      if (transitionGlow) {
+        window.gsap.killTweensOf(transitionGlow);
+        window.gsap.set(transitionGlow, { clearProps: "opacity,scale,visibility" });
+      }
+    }
+  });
   audio.addEventListener("seeked", () => {
     renderedLineIndex = -2;
     lastActiveIndex = -1;
