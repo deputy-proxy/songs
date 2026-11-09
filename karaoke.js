@@ -20,10 +20,6 @@
   let flatWords = [];
   let lastRenderedKey = "";
   let isSeeking = false;
-  let localAudioUrl = null;
-  const localAudioButton = $("localAudioButton");
-  const localAudioInput = $("localAudioInput");
-  const audioFileStatus = $("audioFileStatus");
 
   function parseEnhancedLrc(source) {
     const parsed = [];
@@ -229,19 +225,6 @@
     lyricsMessage.textContent = "The MP3 is not bundled yet. Use “LOAD MP3 FROM DEVICE” to choose the recording.";
   });
 
-
-  localAudioButton.addEventListener("click", () => localAudioInput.click());
-  localAudioInput.addEventListener("change", (event) => {
-    const file = event.target.files && event.target.files[0];
-    if (!file) return;
-    if (localAudioUrl) URL.revokeObjectURL(localAudioUrl);
-    localAudioUrl = URL.createObjectURL(file);
-    audio.src = localAudioUrl;
-    audio.load();
-    audioFileStatus.textContent = file.name;
-    lyricsMessage.textContent = "Local audio loaded. Word highlighting is using the uploaded LRC timeline.";
-    lastRenderedKey = "";
-  });
 
   loadLyrics();
 })();
