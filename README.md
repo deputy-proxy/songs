@@ -20,3 +20,11 @@ GitHub Actions publishes the static site to GitHub Pages from `main`.
 
 ## Audio reactivity
 The reactivity selector has three presets: Subtle, Balanced, and Dynamic. The audio is analysed locally by the browser after the user presses Play; no audio is uploaded for analysis. Browsers without Web Audio support still play the song and show synchronized lyrics, but do not show frequency-driven effects.
+
+## Visual templates
+- **Green Light** is the original green-and-mint player design.
+- **Monochrome** uses a black background, white lyrics, and grayscale controls, meters, and page details.
+Use the **Template** selector to switch designs without interrupting playback.
+
+## Clean lyrics view
+Use **UI ON** to hide the surrounding interface and leave only the synchronized lyrics and BASS / MIDS / AIR meters. Press `U` or double-click / double-tap the lyrics to restore the full interface. Playback can still be controlled with `Space` while the interface is hidden.

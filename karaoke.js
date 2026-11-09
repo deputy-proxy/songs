@@ -14,12 +14,14 @@
   const nextLine = $("nextLine");
   const lyricPosition = $("lyricPosition");
   const lyricsMessage = $("lyricsMessage");
-  const lyricsPanel = document.querySelector(".lyrics-panel");
   const coverArt = document.querySelector(".cover-art");
   const reactivitySelect = $("reactivitySelect");
   const bassMeter = $("bassMeter");
   const midMeter = $("midMeter");
   const highMeter = $("highMeter");
+  const templateSelect = $("templateSelect");
+  const uiToggleButton = $("uiToggleButton");
+  const lyricsPanel = document.querySelector(".lyrics-panel");
 
   const reactivityModes = {
     subtle: { gain: 0.62, beatThreshold: 0.13, label: "Subtle" },
@@ -29,6 +31,8 @@
 
   const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   let reactivityMode = "balanced";
+  let isUiVisible = true;
+  let lastTouchTap = 0;
   let lyricLines = [];
   let flatWords = [];
   let renderedLineIndex = -2;
@@ -173,6 +177,22 @@
       const progress = Math.min(1, Math.max(0, (time - active.time) / duration));
       activeElement.style.setProperty("--word-progress", progress.toFixed(3));
     }
+  }
+
+  function setUiVisible(visible) {
+    isUiVisible = Boolean(visible);
+    document.body.classList.toggle("ui-hidden", !isUiVisible);
+    uiToggleButton.setAttribute("aria-pressed", String(isUiVisible));
+    uiToggleButton.setAttribute("aria-label", isUiVisible ? "Hide interface" : "Show interface");
+    uiToggleButton.textContent = isUiVisible ? "UI ON" : "UI OFF";
+    if (!isUiVisible) uiToggleButton.blur();
+  }
+
+  function applyTemplate(templateName) {
+    const allowedTemplates = ["green-light", "monochrome"];
+    const selected = allowedTemplates.includes(templateName) ? templateName : "green-light";
+    document.body.dataset.template = selected;
+    templateSelect.value = selected;
   }
 
   function formatTime(seconds) {
@@ -451,6 +471,29 @@
     reactivitySelect.title = reactivityModes[reactivityMode].label + " audio response";
   });
 
+  templateSelect.addEventListener("change", (event) => {
+    applyTemplate(event.target.value);
+  });
+
+  uiToggleButton.addEventListener("click", () => {
+    setUiVisible(!isUiVisible);
+  });
+
+  // Double-click (or double-tap on touch screens) the lyrics to restore the controls.
+  lyricsPanel.addEventListener("dblclick", () => {
+    if (!isUiVisible) setUiVisible(true);
+  });
+  lyricsPanel.addEventListener("pointerup", (event) => {
+    if (event.pointerType !== "touch" || isUiVisible) return;
+    const now = performance.now();
+    if (now - lastTouchTap < 360) {
+      lastTouchTap = 0;
+      setUiVisible(true);
+    } else {
+      lastTouchTap = now;
+    }
+  });
+
   $("fullscreenButton").addEventListener("click", async () => {
     try {
       if (!document.fullscreenElement) await document.documentElement.requestFullscreen();
@@ -471,7 +514,9 @@
     } else if (event.key === "ArrowRight") {
       audio.currentTime = Math.min(audio.duration || Infinity, audio.currentTime + 5);
     } else if (event.key.toLowerCase() === "f") {
-      $("fullscreenButton").click();
+      if (isUiVisible) $("fullscreenButton").click();
+    } else if (event.key.toLowerCase() === "u") {
+      setUiVisible(!isUiVisible);
     }
   });
 
