@@ -226,7 +226,7 @@
   });
 
   audio.addEventListener("error", () => {
-    lyricsMessage.textContent = "The audio file could not be loaded. Check that assets/song.mp3 exists.";
+    lyricsMessage.textContent = "The MP3 is not bundled yet. Use “LOAD MP3 FROM DEVICE” to choose the recording.";
   });
 
 
