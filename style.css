@@ -130,3 +130,8 @@ h1 { margin: 0; font: 600 clamp(28px, 4.3vw, 43px)/1.06 "Space Grotesk", sans-se
   .footer { margin-top: 30px; flex-direction: column; text-align: center; font-size: 9px; }
 }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; } }
+
+.audio-upload-row { display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-top:12px; }
+.local-audio-button { border:1px solid rgba(140,226,194,.3); border-radius:7px; padding:7px 10px; color:#a9dfc6; background:rgba(74,145,116,.08); font-size:8px; font-weight:700; letter-spacing:.11em; cursor:pointer; }
+.local-audio-button:hover { background:rgba(74,145,116,.16); border-color:rgba(140,226,194,.55); }
+#audioFileStatus { color:#71867b; font-size:9px; }
