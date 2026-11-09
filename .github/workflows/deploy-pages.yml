@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -23,6 +23,29 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
+
+      - name: Fetch uploaded song from Suno CDN
+        continue-on-error: true
+        run: |
+          set -euo pipefail
+          mkdir -p assets
+          if [ -s assets/song.mp3 ]; then
+            echo "Song asset already exists."
+            exit 0
+          fi
+          if ! curl --fail --location --silent --show-error --retry 2 --connect-timeout 20 --max-time 120 \
+            "https://cdn1.suno.ai/b60e8568-4ad5-4b42-b532-e471d5fa2b91.mp3" \
+            --output assets/song.mp3; then
+            rm -f assets/song.mp3
+            echo "::warning::Suno public CDN did not provide this uploaded file; audio remains a local-file option."
+            exit 1
+          fi
+          test -s assets/song.mp3
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/song.mp3
+          git commit -m "chore: add uploaded song audio"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
 
       - name: Validate static site
         run: |
