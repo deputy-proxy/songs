@@ -30,7 +30,9 @@ jobs:
           test -s style.css
           test -s karaoke.js
           test -s assets/song.enhanced.lrc
-          echo "Static karaoke page and Enhanced LRC are ready."
+          test -s assets/song.word-timings.json
+          python3 -c 'import json; from pathlib import Path; data=json.loads(Path("assets/song.word-timings.json").read_text()); lines=data.get("lines", []); words=[word for line in lines for word in line.get("words", [])]; assert len(lines)==45, f"Expected 45 lyric lines, got {len(lines)}"; assert len(words)==342, f"Expected 342 timed words, got {len(words)}"; assert all(word["end"] > word["start"] for word in words), "Invalid word span"; assert all(words[i]["start"] <= words[i+1]["start"] for i in range(len(words)-1)), "Word starts are not ordered"; assert all(words[i]["end"] <= words[i+1]["start"] + 0.001 for i in range(len(words)-1)), "Word spans overlap"; print(f"Validated {len(lines)} lyric lines and {len(words)} word spans.")'
+          echo "Static karaoke page and synchronized lyrics are ready."
           if [ ! -s assets/song.mp3 ]; then
             echo "::warning::assets/song.mp3 is not in the repository yet. The page can still be opened, but playback needs the MP3 asset."
           fi

@@ -1,0 +1,1899 @@
+{
+  "version": 1,
+  "title": "The Ground Beneath Our Shoes",
+  "durationSeconds": 208.76,
+  "alignmentSource": "Suno word-span alignment for the bundled recording",
+  "wordCount": 342,
+  "lines": [
+    {
+      "words": [
+        {
+          "text": "You",
+          "start": 13.142,
+          "end": 13.359
+        },
+        {
+          "text": "wake",
+          "start": 13.359,
+          "end": 13.611
+        },
+        {
+          "text": "up",
+          "start": 13.611,
+          "end": 13.771
+        },
+        {
+          "text": "to",
+          "start": 13.841,
+          "end": 14.016
+        },
+        {
+          "text": "a",
+          "start": 14.129,
+          "end": 14.209
+        },
+        {
+          "text": "bell",
+          "start": 14.263,
+          "end": 14.88
+        },
+        {
+          "text": "in",
+          "start": 14.905,
+          "end": 15.065
+        },
+        {
+          "text": "Tokyo",
+          "start": 15.126,
+          "end": 15.827
+        }
+      ]
+    },
+    {
+      "words": [
+        {
+          "text": "I",
+          "start": 16.692,
+          "end": 16.772
+        },
+        {
+          "text": "wake",
+          "start": 16.864,
+          "end": 17.151
+        },
+        {
+          "text": "up",
+          "start": 17.151,
+          "end": 17.338
+        },
+        {
+          "text": "to",
+          "start": 17.421,
+          "end": 17.6
+        },
+        {
+          "text": "the",
+          "start": 17.641,
+          "end": 17.796
+        },
+        {
+          "text": "rain",
+          "start": 17.796,
+          "end": 18.48
+        },
+        {
+          "text": "in",
+          "start": 18.499,
+          "end": 18.659
+        },
+        {
+          "text": "Montreal",
+          "start": 18.692,
+          "end": 19.425
+        }
+      ]
+    },
+    {
+      "words": [
+        {
+          "text": "We",
+          "start": 20.28,
+          "end": 20.44
+        },
+        {
+          "text": "both",
+          "start": 20.497,
+          "end": 20.817
+        },
+        {
+          "text": "pour",
+          "start": 20.84,
+          "end": 21.142
+        },
+        {
+          "text": "coffee,",
+          "start": 21.142,
+          "end": 21.676
+        },
+        {
+          "text": "watch",
+          "start": 21.836,
+          "end": 22.059
+        },
+        {
+          "text": "the",
+          "start": 22.059,
+          "end": 22.205
+        },
+        {
+          "text": "morning",
+          "start": 22.205,
+          "end": 22.663
+        },
+        {
+          "text": "light",
+          "start": 22.663,
+          "end": 23.063
+        }
+      ]
+    },
+    {
+      "words": [
+        {
+          "text": "Creeps",
+          "start": 23.561,
+          "end": 23.847
+        },
+        {
+          "text": "slow",
+          "start": 23.847,
+          "end": 24.304
+        },
+        {
+          "text": "across",
+          "start": 24.304,
+          "end": 24.732
+        },
+        {
+          "text": "an",
+          "start": 24.732,
+          "end": 24.943
+        },
+        {
+          "text": "ordinary",
+          "start": 24.943,
+          "end": 26.179
+        },
+        {
+          "text": "wall",
+          "start": 26.206,
+          "end": 26.526
+        }
+      ]
+    },
+    {
+      "words": [
+        {
+          "text": "You",
+          "start": 27.315,
+          "end": 27.555
+        },
+        {
+          "text": "got",
+          "start": 27.59,
+          "end": 27.84
+        },
+        {
+          "text": "a",
+          "start": 27.841,
+          "end": 27.998
+        },
+        {
+          "text": "mother",
+          "start": 27.998,
+          "end": 28.44
+        },
+        {
+          "text": "asking",
+          "start": 28.44,
+          "end": 29.184
+        },
+        {
+          "text": "if",
+          "start": 29.293,
+          "end": 29.453
+        },
+        {
+          "text": "you",
+          "start": 29.507,
+          "end": 29.747
+        },
+        {
+          "text": "ate",
+          "start": 29.804,
+          "end": 30.044
+        }
+      ]
+    },
+    {
+      "words": [
+        {
+          "text": "I",
+          "start": 30.848,
+          "end": 30.928
+        },
+        {
+          "text": "got",
+          "start": 31.069,
+          "end": 31.301
+        },
+        {
+          "text": "a",
+          "start": 31.301,
+          "end": 31.493
+        },
+        {
+          "text": "debt",
+          "start": 31.538,
+          "end": 31.737
+        },
+        {
+          "text": "I'm",
+          "start": 31.737,
+          "end": 31.919
+        },
+        {
+          "text": "trying",
+          "start": 31.919,
+          "end": 32.534
+        },
+        {
+          "text": "hard",
+          "start": 32.593,
+          "end": 32.964
+        },
+        {
+          "text": "to",
+          "start": 33.058,
+          "end": 33.218
+        },
+        {
+          "text": "pay",
+          "start": 33.316,
+          "end": 33.556
+        }
+      ]
+    },
+    {
+      "words": [
+        {
+          "text": "Seven",
+          "start": 34.273,
+          "end": 34.673
+        },
+        {
+          "text": "billion",
+          "start": 34.819,
+          "end": 35.242
+        },
+        {
+          "text": "rooms",
+          "start": 35.242,
+          "end": 35.851
+        },
+        {
+          "text": "inside",
+          "start": 36.19,
+          "end": 36.67
+        },
+        {
+          "text": "one",
+          "start": 36.681,
+          "end": 36.931
+        },
+        {
+          "text": "house",
+          "start": 37.025,
+          "end": 37.425
+        }
+      ]
+    },
+    {
+      "words": [
+        {
+          "text": "Looking",
+          "start": 37.832,
+          "end": 38.344
+        },
+        {
+          "text": "out",
+          "start": 38.344,
+          "end": 38.772
+        },
+        {
+          "text": "the",
+          "start": 38.772,
+          "end": 38.892
+        },
+        {
+          "text": "window",
+          "start": 38.892,
+          "end": 39.372
+        },
+        {
+          "text": "the",
+          "start": 39.586,
+          "end": 39.741
+        },
+        {
+          "text": "same",
+          "start": 39.741,
+          "end": 40.213
+        },
+        {
+          "text": "way",
+          "start": 40.217,
+          "end": 40.498
+        }
+      ]
+    },
+    {
+      "words": [
+        {
+          "text": "No",
+          "start": 41.97,
+          "end": 42.196
+        },
+        {
+          "text": "speeches",
+          "start": 42.196,
+          "end": 42.934
+        },
+        {
+          "text": "on",
+          "start": 42.936,
+          "end": 43.174
+        },
+        {
+          "text": "a",
+          "start": 43.198,
+          "end": 43.253
+        },
+        {
+          "text": "stage,",
+          "start": 43.253,
+          "end": 43.66
+        },
+        {
+          "text": "no",
+          "start": 43.8,
+          "end": 43.972
+        },
+        {
+          "text": "flags",
+          "start": 43.972,
+          "end": 44.594
+        },
+        {
+          "text": "upon",
+          "start": 44.594,
+          "end": 44.914
+        },
+        {
+          "text": "a",
+          "start": 44.938,
+          "end": 45.054
+        },
+        {
+          "text": "hill",
+          "start": 45.054,
+          "end": 45.374
+        }
+      ]
+    },
+    {
+      "words": [
+        {
+          "text": "Just",
+          "start": 45.518,
+          "end": 45.726
+        },
+        {
+          "text": "two",
+          "start": 45.726,
+          "end": 46.021
+        },
+        {
+          "text": "hands",
+          "start": 46.168,
+          "end": 46.415
+        },
+        {
+          "text": "holding",
+          "start": 46.415,
+          "end": 46.897
+        },
+        {
+          "text": "on",
+          "start": 46.897,
+          "end": 47.204
+        },
+        {
+          "text": "against",
+          "start": 47.418,
+          "end": 47.974
+        },
+        {
+          "text": "the",
+          "start": 47.974,
+          "end": 48.133
+        },
+        {
+          "text": "winter",
+          "start": 48.133,
+          "end": 48.556
+        },
+        {
+          "text": "chill",
+          "start": 48.556,
+          "end": 48.956
+        }
+      ]
+    },
+    {
+      "words": [
+        {
+          "text": "Can",
+          "start": 49.05,
+          "end": 49.243
+        },
+        {
+          "text": "you",
+          "start": 49.243,
+          "end": 49.459
+        },
+        {
+          "text": "hear",
+          "start": 49.459,
+          "end": 49.733
+        },
+        {
+          "text": "the",
+          "start": 49.733,
+          "end": 49.851
+        },
+        {
+          "text": "quiet",
+          "start": 49.851,
+          "end": 50.284
+        },
+        {
+          "text": "noise?",
+          "start": 50.378,
+          "end": 50.815
+        }
+      ]
+    },
+    {
+      "words": [
+        {
+          "text": "It's",
+          "start": 52.294,
+          "end": 52.521
+        },
+        {
+          "text": "the",
+          "start": 52.521,
+          "end": 52.631
+        },
+        {
+          "text": "sound",
+          "start": 52.631,
+          "end": 53.077
+        },
+        {
+          "text": "of",
+          "start": 53.195,
+          "end": 53.355
+        },
+        {
+          "text": "making",
+          "start": 53.372,
+          "end": 53.852
+        },
+        {
+          "text": "choices",
+          "start": 53.925,
+          "end": 54.677
+        }
+      ]
+    },
+    {
+      "words": [
+        {
+          "text": "The",
+          "start": 55.358,
+          "end": 55.49
+        },
+        {
+          "text": "ground",
+          "start": 55.49,
+          "end": 55.868
+        },
+        {
+          "text": "beneath",
+          "start": 55.868,
+          "end": 56.275
+        },
+        {
+          "text": "our",
+          "start": 56.275,
+          "end": 56.572
+        },
+        {
+          "text": "shoes",
+          "start": 56.572,
+          "end": 57.014
+        },
+        {
+          "text": "don't",
+          "start": 57.111,
+          "end": 57.314
+        },
+        {
+          "text": "ask",
+          "start": 57.314,
+          "end": 57.685
+        },
+        {
+          "text": "our",
+          "start": 57.685,
+          "end": 57.974
+        },
+        {
+          "text": "name",
+          "start": 57.981,
+          "end": 58.301
+        }
+      ]
+    },
+    {
+      "words": [
+        {
+          "text": "The",
+          "start": 58.773,
+          "end": 58.952
+        },
+        {
+          "text": "rain",
+          "start": 58.952,
+          "end": 59.391
+        },
+        {
+          "text": "upon",
+          "start": 59.391,
+          "end": 59.716
+        },
+        {
+          "text": "our",
+          "start": 59.716,
+          "end": 60.076
+        },
+        {
+          "text": "shoulders",
+          "start": 60.076,
+          "end": 60.721
+        },
+        {
+          "text": "feels",
+          "start": 60.721,
+          "end": 61.252
+        },
+        {
+          "text": "the",
+          "start": 61.252,
+          "end": 61.399
+        },
+        {
+          "text": "same",
+          "start": 61.399,
+          "end": 61.745
+        }
+      ]
+    },
+    {
+      "words": [
+        {
+          "text": "We",
+          "start": 62.123,
+          "end": 62.333
+        },
+        {
+          "text": "bleed,",
+          "start": 62.37,
+          "end": 62.806
+        },
+        {
+          "text": "we",
+          "start": 63.021,
+          "end": 63.196
+        },
+        {
+          "text": "breathe,",
+          "start": 63.24,
+          "end": 63.8
+        },
+        {
+          "text": "we",
+          "start": 63.908,
+          "end": 64.076
+        },
+        {
+          "text": "break,",
+          "start": 64.122,
+          "end": 64.59
+        },
+        {
+          "text": "we",
+          "start": 64.763,
+          "end": 64.985
+        },
+        {
+          "text": "mend",
+          "start": 64.985,
+          "end": 65.33
+        }
+      ]
+    },
+    {
+      "words": [
+        {
+          "text": "We",
+          "start": 65.598,
+          "end": 65.73
+        },
+        {
+          "text": "start",
+          "start": 65.73,
+          "end": 66.264
+        },
+        {
+          "text": "right",
+          "start": 66.264,
+          "end": 66.675
+        },
+        {
+          "text": "where",
+          "start": 66.675,
+          "end": 67.334
+        },
+        {
+          "text": "the",
+          "start": 67.349,
+          "end": 67.57
+        },
+        {
+          "text": "lines",
+          "start": 67.57,
+          "end": 68.268
+        },
+        {
+          "text": "all",
+          "start": 68.268,
+          "end": 68.613
+        },
+        {
+          "text": "end",
+          "start": 68.657,
+          "end": 68.897
+        }
+      ]
+    },
+    {
+      "words": [
+        {
+          "text": "Take",
+          "start": 69.075,
+          "end": 69.353
+        },
+        {
+          "text": "a",
+          "start": 69.353,
+          "end": 69.51
+        },
+        {
+          "text": "breath,",
+          "start": 69.547,
+          "end": 69.987
+        },
+        {
+          "text": "pass",
+          "start": 69.987,
+          "end": 70.192
+        },
+        {
+          "text": "it",
+          "start": 70.192,
+          "end": 70.453
+        },
+        {
+          "text": "on",
+          "start": 70.463,
+          "end": 70.623
+        }
+      ]
+    },
+    {
+      "words": [
+        {
+          "text": "Look",
+          "start": 72.532,
+          "end": 72.909
+        },
+        {
+          "text": "around,",
+          "start": 72.909,
+          "end": 73.288
+        },
+        {
+          "text": "the",
+          "start": 73.288,
+          "end": 73.376
+        },
+        {
+          "text": "fear",
+          "start": 73.376,
+          "end": 73.662
+        },
+        {
+          "text": "is",
+          "start": 73.662,
+          "end": 73.931
+        },
+        {
+          "text": "gone",
+          "start": 73.931,
+          "end": 76.063
+        }
+      ]
+    },
+    {
+      "words": [
+        {
+          "text": "We",
+          "start": 76.063,
+          "end": 76.293
+        },
+        {
+          "text": "don't",
+          "start": 76.302,
+          "end": 76.679
+        },
+        {
+          "text": "need",
+          "start": 76.679,
+          "end": 76.967
+        },
+        {
+          "text": "a",
+          "start": 76.967,
+          "end": 77.081
+        },
+        {
+          "text": "crown",
+          "start": 77.081,
+          "end": 77.552
+        },
+        {
+          "text": "to",
+          "start": 77.816,
+          "end": 77.893
+        },
+        {
+          "text": "stand",
+          "start": 77.893,
+          "end": 78.454
+        },
+        {
+          "text": "up",
+          "start": 78.455,
+          "end": 78.8
+        },
+        {
+          "text": "tall",
+          "start": 78.8,
+          "end": 79.152
+        }
+      ]
+    },
+    {
+      "words": [
+        {
+          "text": "The",
+          "start": 79.755,
+          "end": 79.931
+        },
+        {
+          "text": "world",
+          "start": 79.931,
+          "end": 80.454
+        },
+        {
+          "text": "is",
+          "start": 80.472,
+          "end": 80.708
+        },
+        {
+          "text": "big",
+          "start": 80.797,
+          "end": 81.239
+        },
+        {
+          "text": "enough",
+          "start": 81.239,
+          "end": 81.717
+        },
+        {
+          "text": "for",
+          "start": 81.717,
+          "end": 82.053
+        },
+        {
+          "text": "us",
+          "start": 82.054,
+          "end": 82.371
+        },
+        {
+          "text": "all",
+          "start": 82.371,
+          "end": 82.736
+        }
+      ]
+    },
+    {
+      "words": [
+        {
+          "text": "We",
+          "start": 90.672,
+          "end": 90.821
+        },
+        {
+          "text": "spent",
+          "start": 90.821,
+          "end": 91.095
+        },
+        {
+          "text": "a",
+          "start": 91.095,
+          "end": 91.175
+        },
+        {
+          "text": "thousand",
+          "start": 91.23,
+          "end": 91.764
+        },
+        {
+          "text": "years",
+          "start": 91.764,
+          "end": 92.035
+        },
+        {
+          "text": "just",
+          "start": 92.035,
+          "end": 92.241
+        },
+        {
+          "text": "building",
+          "start": 92.241,
+          "end": 92.651
+        },
+        {
+          "text": "fences",
+          "start": 92.651,
+          "end": 93.298
+        }
+      ]
+    },
+    {
+      "words": [
+        {
+          "text": "Counting",
+          "start": 94.35,
+          "end": 94.85
+        },
+        {
+          "text": "up",
+          "start": 94.85,
+          "end": 95.047
+        },
+        {
+          "text": "the",
+          "start": 95.111,
+          "end": 95.25
+        },
+        {
+          "text": "things",
+          "start": 95.25,
+          "end": 95.568
+        },
+        {
+          "text": "we",
+          "start": 95.568,
+          "end": 95.733
+        },
+        {
+          "text": "ought",
+          "start": 95.767,
+          "end": 96.008
+        },
+        {
+          "text": "to",
+          "start": 96.008,
+          "end": 96.146
+        },
+        {
+          "text": "fear",
+          "start": 96.146,
+          "end": 96.466
+        }
+      ]
+    },
+    {
+      "words": [
+        {
+          "text": "Traded",
+          "start": 97.778,
+          "end": 98.37
+        },
+        {
+          "text": "in",
+          "start": 98.37,
+          "end": 98.51
+        },
+        {
+          "text": "our",
+          "start": 98.51,
+          "end": 98.75
+        },
+        {
+          "text": "mercy",
+          "start": 98.767,
+          "end": 99.193
+        },
+        {
+          "text": "for",
+          "start": 99.198,
+          "end": 99.436
+        },
+        {
+          "text": "defenses",
+          "start": 99.436,
+          "end": 100.307
+        }
+      ]
+    },
+    {
+      "words": [
+        {
+          "text": "Drowning",
+          "start": 101.277,
+          "end": 101.799
+        },
+        {
+          "text": "out",
+          "start": 101.799,
+          "end": 102.053
+        },
+        {
+          "text": "the",
+          "start": 102.074,
+          "end": 102.212
+        },
+        {
+          "text": "whispers",
+          "start": 102.212,
+          "end": 102.744
+        },
+        {
+          "text": "in",
+          "start": 102.744,
+          "end": 102.933
+        },
+        {
+          "text": "our",
+          "start": 102.935,
+          "end": 103.175
+        },
+        {
+          "text": "ear",
+          "start": 103.212,
+          "end": 103.452
+        }
+      ]
+    },
+    {
+      "words": [
+        {
+          "text": "A",
+          "start": 104.204,
+          "end": 104.323
+        },
+        {
+          "text": "child",
+          "start": 104.408,
+          "end": 104.808
+        },
+        {
+          "text": "doesn't",
+          "start": 104.878,
+          "end": 105.31
+        },
+        {
+          "text": "ask",
+          "start": 105.31,
+          "end": 105.716
+        },
+        {
+          "text": "you",
+          "start": 105.716,
+          "end": 105.949
+        },
+        {
+          "text": "where",
+          "start": 105.949,
+          "end": 106.374
+        },
+        {
+          "text": "you're",
+          "start": 106.384,
+          "end": 106.742
+        },
+        {
+          "text": "from",
+          "start": 106.742,
+          "end": 107.062
+        }
+      ]
+    },
+    {
+      "words": [
+        {
+          "text": "Before",
+          "start": 107.825,
+          "end": 108.3
+        },
+        {
+          "text": "they",
+          "start": 108.3,
+          "end": 108.711
+        },
+        {
+          "text": "take",
+          "start": 108.753,
+          "end": 109.231
+        },
+        {
+          "text": "your",
+          "start": 109.231,
+          "end": 109.551
+        },
+        {
+          "text": "hand",
+          "start": 109.612,
+          "end": 110.053
+        },
+        {
+          "text": "to",
+          "start": 110.1,
+          "end": 110.236
+        },
+        {
+          "text": "run",
+          "start": 110.236,
+          "end": 110.532
+        }
+      ]
+    },
+    {
+      "words": [
+        {
+          "text": "No",
+          "start": 111.787,
+          "end": 112.015
+        },
+        {
+          "text": "speeches",
+          "start": 112.015,
+          "end": 112.733
+        },
+        {
+          "text": "on",
+          "start": 112.733,
+          "end": 112.933
+        },
+        {
+          "text": "a",
+          "start": 112.953,
+          "end": 113.003
+        },
+        {
+          "text": "stage,",
+          "start": 113.003,
+          "end": 113.473
+        },
+        {
+          "text": "no",
+          "start": 113.57,
+          "end": 113.736
+        },
+        {
+          "text": "flags",
+          "start": 113.736,
+          "end": 114.354
+        },
+        {
+          "text": "upon",
+          "start": 114.354,
+          "end": 114.694
+        },
+        {
+          "text": "a",
+          "start": 114.703,
+          "end": 114.823
+        },
+        {
+          "text": "hill",
+          "start": 114.823,
+          "end": 115.143
+        }
+      ]
+    },
+    {
+      "words": [
+        {
+          "text": "Just",
+          "start": 115.305,
+          "end": 115.541
+        },
+        {
+          "text": "two",
+          "start": 115.541,
+          "end": 115.81
+        },
+        {
+          "text": "hands",
+          "start": 115.913,
+          "end": 116.176
+        },
+        {
+          "text": "holding",
+          "start": 116.176,
+          "end": 116.655
+        },
+        {
+          "text": "on",
+          "start": 116.655,
+          "end": 117.17
+        },
+        {
+          "text": "against",
+          "start": 117.17,
+          "end": 117.697
+        },
+        {
+          "text": "the",
+          "start": 117.697,
+          "end": 117.903
+        },
+        {
+          "text": "winter",
+          "start": 117.903,
+          "end": 118.304
+        },
+        {
+          "text": "chill",
+          "start": 118.304,
+          "end": 118.786
+        }
+      ]
+    },
+    {
+      "words": [
+        {
+          "text": "Listen",
+          "start": 118.786,
+          "end": 119.218
+        },
+        {
+          "text": "to",
+          "start": 119.218,
+          "end": 119.48
+        },
+        {
+          "text": "the",
+          "start": 119.48,
+          "end": 119.613
+        },
+        {
+          "text": "quiet",
+          "start": 119.613,
+          "end": 120.136
+        },
+        {
+          "text": "noise",
+          "start": 120.194,
+          "end": 120.773
+        }
+      ]
+    },
+    {
+      "words": [
+        {
+          "text": "A",
+          "start": 122.27,
+          "end": 122.35
+        },
+        {
+          "text": "million",
+          "start": 122.429,
+          "end": 123.153
+        },
+        {
+          "text": "rising",
+          "start": 123.153,
+          "end": 123.693
+        },
+        {
+          "text": "voices",
+          "start": 123.708,
+          "end": 124.434
+        }
+      ]
+    },
+    {
+      "words": [
+        {
+          "text": "The",
+          "start": 125.133,
+          "end": 125.284
+        },
+        {
+          "text": "ground",
+          "start": 125.284,
+          "end": 125.71
+        },
+        {
+          "text": "beneath",
+          "start": 125.71,
+          "end": 126.051
+        },
+        {
+          "text": "our",
+          "start": 126.051,
+          "end": 126.34
+        },
+        {
+          "text": "shoes",
+          "start": 126.34,
+          "end": 126.854
+        },
+        {
+          "text": "don't",
+          "start": 126.874,
+          "end": 127.077
+        },
+        {
+          "text": "ask",
+          "start": 127.077,
+          "end": 127.373
+        },
+        {
+          "text": "our",
+          "start": 127.373,
+          "end": 127.686
+        },
+        {
+          "text": "name",
+          "start": 127.706,
+          "end": 128.037
+        }
+      ]
+    },
+    {
+      "words": [
+        {
+          "text": "The",
+          "start": 128.612,
+          "end": 128.73
+        },
+        {
+          "text": "rain",
+          "start": 128.73,
+          "end": 129.17
+        },
+        {
+          "text": "upon",
+          "start": 129.17,
+          "end": 129.491
+        },
+        {
+          "text": "our",
+          "start": 129.491,
+          "end": 129.765
+        },
+        {
+          "text": "shoulders",
+          "start": 129.825,
+          "end": 130.56
+        },
+        {
+          "text": "feels",
+          "start": 130.573,
+          "end": 131.002
+        },
+        {
+          "text": "the",
+          "start": 131.002,
+          "end": 131.093
+        },
+        {
+          "text": "same",
+          "start": 131.093,
+          "end": 131.501
+        }
+      ]
+    },
+    {
+      "words": [
+        {
+          "text": "We",
+          "start": 131.842,
+          "end": 132.125
+        },
+        {
+          "text": "bleed,",
+          "start": 132.125,
+          "end": 132.58
+        },
+        {
+          "text": "we",
+          "start": 132.751,
+          "end": 132.986
+        },
+        {
+          "text": "breathe,",
+          "start": 132.986,
+          "end": 133.546
+        },
+        {
+          "text": "we",
+          "start": 133.62,
+          "end": 133.855
+        },
+        {
+          "text": "break,",
+          "start": 133.855,
+          "end": 134.295
+        },
+        {
+          "text": "we",
+          "start": 134.461,
+          "end": 134.669
+        },
+        {
+          "text": "mend",
+          "start": 134.669,
+          "end": 135.084
+        }
+      ]
+    },
+    {
+      "words": [
+        {
+          "text": "We",
+          "start": 135.304,
+          "end": 135.485
+        },
+        {
+          "text": "start",
+          "start": 135.485,
+          "end": 135.927
+        },
+        {
+          "text": "right",
+          "start": 135.955,
+          "end": 136.362
+        },
+        {
+          "text": "where",
+          "start": 136.362,
+          "end": 137.088
+        },
+        {
+          "text": "the",
+          "start": 137.088,
+          "end": 137.262
+        },
+        {
+          "text": "lines",
+          "start": 137.262,
+          "end": 137.959
+        },
+        {
+          "text": "all",
+          "start": 137.959,
+          "end": 138.374
+        },
+        {
+          "text": "end",
+          "start": 138.387,
+          "end": 138.627
+        }
+      ]
+    },
+    {
+      "words": [
+        {
+          "text": "Take",
+          "start": 138.766,
+          "end": 139.089
+        },
+        {
+          "text": "a",
+          "start": 139.089,
+          "end": 139.188
+        },
+        {
+          "text": "breath,",
+          "start": 139.24,
+          "end": 139.669
+        },
+        {
+          "text": "pass",
+          "start": 139.669,
+          "end": 139.935
+        },
+        {
+          "text": "it",
+          "start": 139.935,
+          "end": 140.159
+        },
+        {
+          "text": "on",
+          "start": 140.201,
+          "end": 140.459
+        }
+      ]
+    },
+    {
+      "words": [
+        {
+          "text": "Look",
+          "start": 142.225,
+          "end": 142.595
+        },
+        {
+          "text": "around,",
+          "start": 142.595,
+          "end": 143.058
+        },
+        {
+          "text": "the",
+          "start": 143.058,
+          "end": 143.113
+        },
+        {
+          "text": "fear",
+          "start": 143.113,
+          "end": 143.395
+        },
+        {
+          "text": "is",
+          "start": 143.395,
+          "end": 143.627
+        },
+        {
+          "text": "gone",
+          "start": 143.627,
+          "end": 143.977
+        }
+      ]
+    },
+    {
+      "words": [
+        {
+          "text": "We",
+          "start": 145.78,
+          "end": 145.974
+        },
+        {
+          "text": "don't",
+          "start": 146.011,
+          "end": 146.194
+        },
+        {
+          "text": "need",
+          "start": 146.194,
+          "end": 146.657
+        },
+        {
+          "text": "a",
+          "start": 146.657,
+          "end": 146.768
+        },
+        {
+          "text": "crown",
+          "start": 146.768,
+          "end": 147.282
+        },
+        {
+          "text": "to",
+          "start": 147.522,
+          "end": 147.643
+        },
+        {
+          "text": "stand",
+          "start": 147.643,
+          "end": 148.133
+        },
+        {
+          "text": "up",
+          "start": 148.136,
+          "end": 148.469
+        },
+        {
+          "text": "tall",
+          "start": 148.469,
+          "end": 148.796
+        }
+      ]
+    },
+    {
+      "words": [
+        {
+          "text": "The",
+          "start": 149.454,
+          "end": 149.614
+        },
+        {
+          "text": "world",
+          "start": 149.614,
+          "end": 150.133
+        },
+        {
+          "text": "is",
+          "start": 150.17,
+          "end": 150.476
+        },
+        {
+          "text": "big",
+          "start": 150.532,
+          "end": 150.912
+        },
+        {
+          "text": "enough",
+          "start": 150.912,
+          "end": 151.386
+        },
+        {
+          "text": "for",
+          "start": 151.386,
+          "end": 151.801
+        },
+        {
+          "text": "us",
+          "start": 151.801,
+          "end": 152.036
+        },
+        {
+          "text": "all",
+          "start": 152.036,
+          "end": 152.384
+        }
+      ]
+    },
+    {
+      "words": [
+        {
+          "text": "Not",
+          "start": 153.416,
+          "end": 153.71
+        },
+        {
+          "text": "tomorrow,",
+          "start": 153.96,
+          "end": 154.6
+        },
+        {
+          "text": "not",
+          "start": 155.181,
+          "end": 155.421
+        },
+        {
+          "text": "when",
+          "start": 155.525,
+          "end": 155.736
+        },
+        {
+          "text": "someone",
+          "start": 155.736,
+          "end": 156.773
+        },
+        {
+          "text": "shows",
+          "start": 156.773,
+          "end": 157.333
+        },
+        {
+          "text": "the",
+          "start": 157.34,
+          "end": 157.497
+        },
+        {
+          "text": "way",
+          "start": 157.497,
+          "end": 157.789
+        }
+      ]
+    },
+    {
+      "words": [
+        {
+          "text": "Right",
+          "start": 159.645,
+          "end": 160.11
+        },
+        {
+          "text": "here,",
+          "start": 160.11,
+          "end": 160.443
+        },
+        {
+          "text": "right",
+          "start": 160.512,
+          "end": 160.965
+        },
+        {
+          "text": "now,",
+          "start": 160.965,
+          "end": 161.362
+        },
+        {
+          "text": "in",
+          "start": 162.262,
+          "end": 162.422
+        },
+        {
+          "text": "the",
+          "start": 162.451,
+          "end": 162.721
+        },
+        {
+          "text": "quiet",
+          "start": 162.721,
+          "end": 163.357
+        },
+        {
+          "text": "of",
+          "start": 163.41,
+          "end": 163.877
+        },
+        {
+          "text": "today",
+          "start": 164.117,
+          "end": 164.589
+        }
+      ]
+    },
+    {
+      "words": [
+        {
+          "text": "Sing",
+          "start": 167.439,
+          "end": 167.722
+        },
+        {
+          "text": "it",
+          "start": 167.722,
+          "end": 167.972
+        },
+        {
+          "text": "out,",
+          "start": 167.972,
+          "end": 168.212
+        },
+        {
+          "text": "sing",
+          "start": 168.264,
+          "end": 168.554
+        },
+        {
+          "text": "it",
+          "start": 168.554,
+          "end": 168.836
+        },
+        {
+          "text": "clear,",
+          "start": 168.836,
+          "end": 169.236
+        },
+        {
+          "text": "there's",
+          "start": 169.319,
+          "end": 169.915
+        },
+        {
+          "text": "no",
+          "start": 169.915,
+          "end": 170.293
+        },
+        {
+          "text": "them,",
+          "start": 170.337,
+          "end": 170.657
+        },
+        {
+          "text": "there's",
+          "start": 170.735,
+          "end": 171.048
+        },
+        {
+          "text": "only",
+          "start": 171.048,
+          "end": 171.403
+        },
+        {
+          "text": "here",
+          "start": 171.403,
+          "end": 171.723
+        }
+      ]
+    },
+    {
+      "words": [
+        {
+          "text": "Take",
+          "start": 171.796,
+          "end": 172.082
+        },
+        {
+          "text": "a",
+          "start": 172.082,
+          "end": 172.162
+        },
+        {
+          "text": "breath,",
+          "start": 172.279,
+          "end": 172.7
+        },
+        {
+          "text": "pass",
+          "start": 172.7,
+          "end": 172.924
+        },
+        {
+          "text": "it",
+          "start": 172.924,
+          "end": 173.084
+        },
+        {
+          "text": "on",
+          "start": 173.159,
+          "end": 173.319
+        }
+      ]
+    },
+    {
+      "words": [
+        {
+          "text": "Take",
+          "start": 173.551,
+          "end": 173.832
+        },
+        {
+          "text": "a",
+          "start": 173.832,
+          "end": 173.912
+        },
+        {
+          "text": "breath,",
+          "start": 174.038,
+          "end": 174.459
+        },
+        {
+          "text": "pass",
+          "start": 174.459,
+          "end": 174.7
+        },
+        {
+          "text": "it",
+          "start": 174.7,
+          "end": 174.86
+        },
+        {
+          "text": "on",
+          "start": 174.931,
+          "end": 175.091
+        }
+      ]
+    },
+    {
+      "words": [
+        {
+          "text": "Look",
+          "start": 175.332,
+          "end": 175.638
+        },
+        {
+          "text": "around,",
+          "start": 175.638,
+          "end": 176.018
+        },
+        {
+          "text": "the",
+          "start": 176.018,
+          "end": 176.105
+        },
+        {
+          "text": "fear",
+          "start": 176.105,
+          "end": 176.388
+        },
+        {
+          "text": "is",
+          "start": 176.388,
+          "end": 176.6
+        },
+        {
+          "text": "gone",
+          "start": 176.6,
+          "end": 176.92
+        }
+      ]
+    },
+    {
+      "words": [
+        {
+          "text": "One",
+          "start": 177.092,
+          "end": 177.45
+        },
+        {
+          "text": "world,",
+          "start": 177.45,
+          "end": 177.85
+        },
+        {
+          "text": "one",
+          "start": 177.947,
+          "end": 178.224
+        },
+        {
+          "text": "floor,",
+          "start": 178.224,
+          "end": 178.78
+        },
+        {
+          "text": "not",
+          "start": 178.78,
+          "end": 179.02
+        },
+        {
+          "text": "a",
+          "start": 179.038,
+          "end": 179.204
+        },
+        {
+          "text": "war",
+          "start": 179.204,
+          "end": 179.635
+        },
+        {
+          "text": "anymore",
+          "start": 179.635,
+          "end": 180.631
+        }
+      ]
+    }
+  ]
+}

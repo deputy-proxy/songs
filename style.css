@@ -182,19 +182,28 @@ h1 { margin: 0; font: 600 clamp(28px, 4.3vw, 43px)/1.06 "Space Grotesk", sans-se
   color: #a5f0cd;
   text-shadow: 0 0 calc(4px + var(--bass-level) * 18px) rgba(120, 239, 186, calc(.22 + var(--bass-level) * .42));
   filter: drop-shadow(0 0 calc(2px + var(--mid-level) * 7px) rgba(170, 255, 215, calc(.12 + var(--mid-level) * .2)));
-  transition: width .055s linear, filter .09s linear;
+  transition: filter .09s linear;
+  will-change: width, filter;
 }
 .word.done { opacity: .83; }
 .word.done .word-base { color: #8ce2c2; }
 .word.done .word-highlight { width: 100%; color: #8ce2c2; }
 .word.active { transform: scale(calc(1 + var(--bass-level) * .012 + var(--beat-pulse) * .014)); }
 .word.active .word-base { color: #dcebe4; }
-.word.active .word-highlight { width: calc(var(--word-progress, 0) * 100%); color: #b9ffdc; }
+.word.active .word-highlight {
+  width: calc(var(--word-progress, 0) * 100%);
+  color: #c5ffe2;
+  text-shadow:
+    0 0 7px rgba(183,255,220,.78),
+    0 0 calc(13px + var(--bass-level) * 19px) rgba(93,232,171,.68),
+    0 0 calc(23px + var(--high-level) * 18px) rgba(93,232,171,.3);
+  filter: drop-shadow(0 0 calc(3px + var(--mid-level) * 8px) rgba(170,255,215,.48));
+}
 .word.upcoming .word-highlight { width: 0; }
-.line-enter { animation: lyric-line-arrive .32s cubic-bezier(.2,.75,.25,1) both; }
+.line-enter { animation: lyric-line-arrive .22s cubic-bezier(.2,.75,.25,1) both; }
 @keyframes lyric-line-arrive {
-  from { opacity: .35; transform: translateY(9px); filter: blur(2px); }
-  to { opacity: 1; transform: translateY(0); filter: blur(0); }
+  from { transform: translateY(7px); filter: blur(1.5px); }
+  to { transform: translateY(0); filter: blur(0); }
 }
 .cover-art {
   --bass-level: 0;

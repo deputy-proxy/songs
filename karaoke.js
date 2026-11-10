@@ -52,19 +52,26 @@
   let beatPulse = 0;
   const smoothedEnergy = { bass: 0, mid: 0, high: 0 };
 
-  function parseEnhancedLrc(source) {
-    const parsed = [];
-    for (const rawLine of source.split(/\r?\n/)) {
-      const line = rawLine.trim();
-      if (!line || /^\[(ti|ar|al|length|by|offset|re|ve):/i.test(line)) continue;
-      const matches = [...line.matchAll(/<(\d{2}):(\d{2})\.(\d{2,3})>([^<]*)/g)];
-      const words = matches.map((match) => ({
-        text: match[4].trim(),
-        time: Number(match[1]) * 60 + Number(match[2]) + Number("0." + match[3])
-      })).filter((word) => word.text);
-      if (words.length) parsed.push({ start: words[0].time, words });
+  function parseTimedLyrics(source) {
+    const data = JSON.parse(source);
+    if (!Array.isArray(data.lines) || !data.lines.length) {
+      throw new Error("The word-timing file does not contain any lyric lines.");
     }
-    return parsed;
+
+    return data.lines.map((line) => {
+      if (!Array.isArray(line.words) || !line.words.length) {
+        throw new Error("A lyric line has no timed words.");
+      }
+      const words = line.words.map((word) => {
+        const start = Number(word.start);
+        const end = Number(word.end);
+        if (!word.text || !Number.isFinite(start) || !Number.isFinite(end) || end <= start) {
+          throw new Error("A lyric word has an invalid audio time span.");
+        }
+        return { text: String(word.text), time: start, end };
+      });
+      return { start: words[0].time, words };
+    });
   }
 
   function flattenWords(lines) {
@@ -84,7 +91,7 @@
     })[char]);
   }
 
-  function findActiveWord(time) {
+  function findLastStartedWord(time) {
     let low = 0;
     let high = flatWords.length - 1;
     let found = -1;
@@ -98,6 +105,12 @@
       }
     }
     return found;
+  }
+
+  function findActiveWord(time) {
+    const index = findLastStartedWord(time);
+    if (index < 0) return -1;
+    return time < flatWords[index].end ? index : -1;
   }
 
   function renderLine(target, line, role) {
@@ -207,22 +220,13 @@
       );
     }
 
+    // Keep the current lyric fully visible from its exact audio onset.
+    // Only position and blur are animated; opacity never delays the word glow.
     timeline.fromTo(currentLine,
-      { y: currentFromY, autoAlpha: isAdjacent ? .24 : 0, filter: "blur(7px)", scale: .975 },
-      { y: 0, autoAlpha: 1, filter: "blur(0px)", scale: 1, duration: .72, ease: "power4.out" },
+      { y: currentFromY, filter: "blur(2.5px)", scale: .985 },
+      { y: 0, filter: "blur(0px)", scale: 1, duration: .34, ease: "power3.out" },
       0
     );
-
-    const wordVisualLayers = currentWordElements
-      .map((element) => element.querySelector(".word-visual"))
-      .filter(Boolean);
-    if (wordVisualLayers.length) {
-      timeline.fromTo(wordVisualLayers,
-        { y: 13, autoAlpha: .28, filter: "blur(3px)" },
-        { y: 0, autoAlpha: 1, filter: "blur(0px)", duration: .46, stagger: { each: .022, from: "start" }, ease: "power3.out" },
-        .055
-      );
-    }
 
     if (hasNext) {
       timeline.fromTo(nextLine,
@@ -253,8 +257,12 @@
   function renderLyrics(time = audio.currentTime || 0) {
     if (!lyricLines.length) return;
 
+    // Keep the current line visible during pauses, but only light a word
+    // while the audio clock is inside that word's aligned start/end span.
+    const lastStartedIndex = findLastStartedWord(time);
     const activeIndex = findActiveWord(time);
-    if (activeIndex < 0) {
+
+    if (lastStartedIndex < 0) {
       if (renderedLineIndex !== -1) {
         previousLine.textContent = "";
         currentLine.className = "lyric-line lyric-current";
@@ -268,8 +276,7 @@
       return;
     }
 
-    const active = flatWords[activeIndex];
-    const lineIndex = active.lineIndex;
+    const lineIndex = flatWords[lastStartedIndex].lineIndex;
 
     if (lineIndex !== renderedLineIndex) {
       const oldLineIndex = renderedLineIndex;
@@ -289,27 +296,37 @@
     if (activeIndex !== lastActiveIndex) {
       currentWordElements.forEach((element) => {
         const globalIndex = Number(element.dataset.globalIndex);
-        const state = globalIndex < activeIndex ? "done"
-          : globalIndex === activeIndex ? "active" : "upcoming";
+        const word = flatWords[globalIndex];
+        const state = time >= word.end ? "done"
+          : time >= word.time ? "active" : "upcoming";
+
         if (element.dataset.state !== state) {
           element.dataset.state = state;
           element.classList.remove("done", "active", "upcoming");
           element.classList.add(state);
         }
+
+        if (state === "done") {
+          element.style.setProperty("--word-progress", "1");
+        } else if (state === "upcoming") {
+          element.style.setProperty("--word-progress", "0");
+        }
       });
+
       lastActiveIndex = activeIndex;
-      currentLine.dataset.activeWord = String(active.wordIndex);
+      currentLine.dataset.activeWord = activeIndex >= 0
+        ? String(flatWords[activeIndex].wordIndex)
+        : "-1";
     }
 
-    const activeElement = currentWordElements[active.wordIndex];
-    if (activeElement) {
-      const nextWord = flatWords[activeIndex + 1];
-      const nextTime = nextWord && nextWord.time > active.time
-        ? nextWord.time
-        : active.time + 0.32;
-      const duration = Math.max(0.12, Math.min(1.15, nextTime - active.time));
-      const progress = Math.min(1, Math.max(0, (time - active.time) / duration));
-      activeElement.style.setProperty("--word-progress", progress.toFixed(3));
+    if (activeIndex >= 0) {
+      const active = flatWords[activeIndex];
+      const activeElement = currentWordElements[active.wordIndex];
+      if (activeElement) {
+        const duration = Math.max(0.001, active.end - active.time);
+        const progress = Math.min(1, Math.max(0, (time - active.time) / duration));
+        activeElement.style.setProperty("--word-progress", progress.toFixed(4));
+      }
     }
   }
 
@@ -520,13 +537,13 @@
 
   async function loadLyrics() {
     try {
-      const response = await fetch("./assets/song.enhanced.lrc", { cache: "no-cache" });
-      if (!response.ok) throw new Error("Lyrics request failed: " + response.status);
+      const response = await fetch("./assets/song.word-timings.json", { cache: "no-cache" });
+      if (!response.ok) throw new Error("Word timings request failed: " + response.status);
       const source = await response.text();
-      lyricLines = parseEnhancedLrc(source);
+      lyricLines = parseTimedLyrics(source);
       flatWords = flattenWords(lyricLines);
-      if (!flatWords.length) throw new Error("No word timestamps found in the LRC file.");
-      lyricsMessage.textContent = flatWords.length + " word cues · ready for live audio analysis";
+      if (!flatWords.length) throw new Error("No word spans found in the timing file.");
+      lyricsMessage.textContent = flatWords.length + " word spans · aligned to the recording";
       renderLyrics(0);
     } catch (error) {
       lyricsMessage.textContent = "Could not load the synchronized lyrics. " + error.message;

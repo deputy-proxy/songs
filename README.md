@@ -1,19 +1,20 @@
 # The Ground Beneath Our Shoes — Karaoke
 
-A static karaoke player with Enhanced LRC word timing and real-time audio-reactive visuals.
+A static karaoke player with audio-aligned word-span timing and real-time audio-reactive visuals.
 
 ## Play
-Open the GitHub Pages site and press Play. The MP3 and Enhanced LRC are bundled with the page. Word fills follow the audio playback clock, while the Web Audio API analyses bass, midrange, and high-frequency energy locally in the browser. Frequency energy drives the lyric glow, pulse, cover art, and live frequency meters. Bass transients add beat accents. Seeking and playback-speed changes remain synchronized.
+Open the GitHub Pages site and press Play. The MP3 and aligned word-timing data are bundled with the page. Word fills are calculated directly from each word's aligned start/end span and the audio playback clock, without a CSS width tween that could trail the voice. The Web Audio API analyses bass, midrange, and high-frequency energy locally in the browser. Frequency energy drives the lyric glow, pulse, cover art, and live frequency meters. Bass transients add beat accents. Seeking and playback-speed changes remain synchronized.
 
 ## Repository layout
 - `index.html` — karaoke page
 - `style.css` — responsive display
-- `karaoke.js` — audio playback, Enhanced LRC timing, Web Audio analysis, and animation loop
+- `karaoke.js` — audio playback, word-span timing, Web Audio analysis, and animation loop
 - `assets/song.mp3` — uploaded recording
-- `assets/song.enhanced.lrc` — Suno word alignment
+- `assets/song.word-timings.json` — Suno start/end spans for every displayed word
+- `assets/song.enhanced.lrc` — downloadable Enhanced LRC export
 
 ## Lyrics format
-The LRC uses Enhanced LRC word timestamps, with each word prefixed by its start position, for example `<00:13.14>You <00:13.36>wake`.
+The player reads `song.word-timings.json`, which stores both the start and end of every displayed word. The spans are aligned against the bundled recording and mapped back to all 342 displayed words. The downloadable Enhanced LRC is retained as a compatible start-time export.
 
 ## Deployment
 GitHub Actions publishes the static site to GitHub Pages from `main`.
